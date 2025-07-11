@@ -4,8 +4,9 @@ import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {Button, Checkbox} from '@mui/material';
-import {pink} from '@mui/material/colors';
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import { pink } from '@mui/material/colors';
 
 type TodolistPropsType = {
     todolistId: string

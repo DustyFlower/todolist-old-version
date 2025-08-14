@@ -17,7 +17,7 @@ import { styled } from '@mui/material/styles';
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
 
-type TodolistType = {
+export type TodolistType = {
     id: string,
     title: string,
     filter: FilterValuesType
@@ -47,8 +47,29 @@ const Item = styled(Paper)(({theme}) => ({
     }),
 }));
 
-
 function App() {
+
+    let todolistId1 = v1()
+    let todolistId2 = v1()
+
+    let [todolists, setTodolists] = useState<TodolistType[]>([
+        {id: todolistId1, title: 'What to learn', filter: 'all'},
+        {id: todolistId2, title: 'What to buy', filter: 'all'},
+    ])
+
+    let [tasks, setTasks] = useState<TaskStateType>({
+        [todolistId1]: [
+            {id: v1(), title: 'CSS&HTML', isDone: true},
+            {id: v1(), title: 'JS', isDone: true},
+            {id: v1(), title: 'ReactJS', isDone: false},
+            {id: v1(), title: 'Rest API', isDone: false},
+            {id: v1(), title: 'GraphQL', isDone: false}
+        ],
+        [todolistId2]: [
+            {id: v1(), title: 'Book', isDone: false},
+            {id: v1(), title: 'Milk', isDone: false}
+        ]
+    })
 
     const changeStatus = (payload: { taskId: string, isDone: boolean, todolistId: string }) => {
         const {taskId, isDone, todolistId} = payload;
@@ -76,28 +97,6 @@ function App() {
         delete tasks[todolistId]
         setTasks({...tasks})
     }
-
-    let todolistId1 = v1()
-    let todolistId2 = v1()
-
-    let [todolists, setTodolists] = useState<TodolistType[]>([
-        {id: todolistId1, title: 'What to learn', filter: 'all'},
-        {id: todolistId2, title: 'What to buy', filter: 'all'},
-    ])
-
-    let [tasks, setTasks] = useState<TaskStateType>({
-        [todolistId1]: [
-            {id: v1(), title: 'CSS&HTML', isDone: true},
-            {id: v1(), title: 'JS', isDone: true},
-            {id: v1(), title: 'ReactJS', isDone: false},
-            {id: v1(), title: 'Rest API', isDone: false},
-            {id: v1(), title: 'GraphQL', isDone: false}
-        ],
-        [todolistId2]: [
-            {id: v1(), title: 'Book', isDone: false},
-            {id: v1(), title: 'Milk', isDone: false}
-        ]
-    })
 
     const addTodolist = (title: string) => {
         let todolist: TodolistType = {id: v1(), title, filter: 'all'}

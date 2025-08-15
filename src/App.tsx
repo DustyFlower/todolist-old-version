@@ -23,7 +23,7 @@ export type TodolistType = {
     filter: FilterValuesType
 }
 
-type TaskStateType = {
+export type TaskStateType = {
     [key: string]: TaskType[]
 }
 
@@ -71,11 +71,6 @@ function App() {
         ]
     })
 
-    const changeStatus = (payload: { taskId: string, isDone: boolean, todolistId: string }) => {
-        const {taskId, isDone, todolistId} = payload;
-        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
-    }
-
     const removeTask = (payload: { taskId: string, todolistId: string }) => {
         const {taskId, todolistId} = payload
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)});
@@ -85,6 +80,16 @@ function App() {
         const {title, todolistId} = payload
         let newTask: TaskType = {id: v1(), title: title, isDone: false};
         setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
+    }
+
+    const changeTaskTitle = (payload: { taskId: string, title: string, todolistId: string }) => {
+        const {taskId, title, todolistId} = payload
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title} : t)})
+    }
+
+    const changeStatus = (payload: { taskId: string, isDone: boolean, todolistId: string }) => {
+        const {taskId, isDone, todolistId} = payload;
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
     }
 
     const changeFilter = (payload: { filter: FilterValuesType, todolistId: string }) => {
@@ -102,11 +107,6 @@ function App() {
         let todolist: TodolistType = {id: v1(), title, filter: 'all'}
         setTodolists([todolist, ...todolists])
         setTasks({...tasks, [todolist.id]: []})
-    }
-
-    const changeTaskTitle = (payload: { taskId: string, title: string, todolistId: string }) => {
-        const {taskId, title, todolistId} = payload
-        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title} : t)})
     }
 
     const onChangeTodolistTitle = (payload: { todolistId: string, title: string }) => {
